@@ -89,6 +89,12 @@ class Client
     }
     return $this->categories;
   }
+  
+  public function category($id)
+  {
+      $category = new Category($this, $id);
+      return $category;
+  }
 
   private $posts;
 
@@ -98,5 +104,21 @@ class Client
     }
     return $this->posts;
   }
+  
+  public function user($id)
+  {
+      $user = new User($this, $id);
+      return $user;
+  }
 
+  private $users;
+
+  public function users()
+  {
+      if ($this->users == null) {
+          $this->users = new Users($this);
+      }
+      return $this->categories;
+  }
+  
 }
