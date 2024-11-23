@@ -7,8 +7,6 @@ use Vinkas\Discourse\Client as Discourse;
 class Connect
 {
 
-  protected $discourse;
-
   protected $nonce_key = 'nonce';
 
   protected $payload_response_key = 'sso';
@@ -19,8 +17,7 @@ class Connect
   private $signature;
   private $nonce;
 
-  public function __construct(Discourse $discourse, $secret, $payload = null, $signature = null) {
-    $this->discourse = $discourse;
+  public function __construct(protected readonly string $baseUrl, $secret, $payload = null, $signature = null) {
     $this->secret = $secret;
     if($payload == null) {
       $payload = $_GET['sso'];
@@ -78,7 +75,7 @@ class Connect
   }
 
   public function getCallbackUrl() {
-    return $this->discourse->getUrl() . "/session/sso_login";
+    return $this->baseUrl . "/session/sso_login";
   }
 
   protected function getResponseQuery(array $userParams)

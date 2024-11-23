@@ -15,11 +15,13 @@
         }
     ],
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "saloonphp/saloon": "^3.10"
 	  },
     "autoload": {
         "psr-4": {
-            "Vinkas\\Discourse\\": "src/"
+            "Vinkas\\Discourse\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "keywords": ["connect", "sso", "discourse", "vinkas"],
@@ -28,6 +30,19 @@
             "dev-main": "2.0-dev"
         }
     },
+    "scripts": {
+        "analyse": "phpstan analyse",
+        "test": "pest"
+    },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "pestphp/pest": "^3.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
 }

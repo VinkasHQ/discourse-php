@@ -4,24 +4,19 @@ namespace Vinkas\Discourse;
 
 class Client
 {
-
-  public function __construct($domain, $ssl) {
-    $this->setUrl($domain, $ssl);
+  public function __construct(protected readonly string $baseUrl) {
+    //
   }
 
-  protected $url;
-
-  public function getUrl() {
-    return $this->url;
-  }
-
-  protected function setUrl($domain, $ssl) {
-    $protocol = $ssl ? 'https' : 'http';
-    $this->url = sprintf('%s://%s', $protocol, $domain);
+  public function getBaseUrl() {
+    return $this->baseUrl;
   }
 
   public function connect($secret, $payload = null, $signature = null) {
-    return new Connect($this, $secret, $payload, $signature);
+    return new Connect($this->getBaseUrl(), $secret, $payload, $signature);
   }
 
+  public function api() {
+    return new Http\Connector($this->getBaseUrl());
+  }
 }
